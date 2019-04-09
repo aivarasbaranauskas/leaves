@@ -10,7 +10,7 @@ import (
 )
 
 func lgTreeFromSklearnDecisionTreeRegressor(tree pickle.SklearnDecisionTreeRegressor, scale float64, base float64) (lgTree, error) {
-	t := lgTree{}
+	t := emptyTree(nil)
 	// no support for categorical features in sklearn trees
 	t.nCategorical = 0
 
