@@ -1,3 +1,3 @@
-module github.com/dmitryikh/leaves
+module github.com/aivarasbaranauskas/leaves
 
 go 1.12
