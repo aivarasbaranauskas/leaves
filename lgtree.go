@@ -33,6 +33,7 @@ type lgTree struct {
 	catBoundaries []uint32
 	catThresholds []uint32
 	nCategorical  uint32
+	cmpClosure    func(fval float64, threshold float64) bool
 }
 
 func (t *lgTree) numericalDecision(node *lgNode, fval float64) bool {
@@ -43,7 +44,8 @@ func (t *lgTree) numericalDecision(node *lgNode, fval float64) bool {
 		return node.Flags&defaultLeft > 0
 	}
 	// Note: LightGBM uses `<=`, but XGBoost uses `<`
-	return fval <= node.Threshold
+	// return fval <= node.Threshold
+	return t.cmpClosure(fval, node.Threshold)
 }
 
 func (t *lgTree) categoricalDecision(node *lgNode, fval float64) bool {
@@ -130,4 +132,16 @@ func numericalNode(feature uint32, missingType uint8, threshold float64, default
 	node.Flags = missingType | defaultType
 	node.Threshold = threshold
 	return node
+}
+
+func emptyTree(cmpClosure func(fval float64, threshold float64) bool) lgTree {
+	if cmpClosure == nil {
+		cmpClosure = func(fval float64, threshold float64) bool {
+			return fval <= threshold
+		}
+	}
+
+	return lgTree{
+		cmpClosure: cmpClosure,
+	}
 }

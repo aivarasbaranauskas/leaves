@@ -22,7 +22,9 @@ func xgIsLeaf(origNode *xgbin.Node) bool {
 }
 
 func xgTreeFromTreeModel(origTree *xgbin.TreeModel, numFeatures uint32) (lgTree, error) {
-	t := lgTree{}
+	t := emptyTree(func(fval float64, threshold float64) bool {
+		return fval < threshold
+	})
 
 	if origTree.Param.NumFeature > int32(numFeatures) {
 		return t, fmt.Errorf(

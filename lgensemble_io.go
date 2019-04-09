@@ -101,7 +101,7 @@ var stringToMissingType = map[string]uint8{
 }
 
 func lgTreeFromReader(reader *bufio.Reader) (lgTree, error) {
-	t := lgTree{}
+	t := emptyTree(nil)
 	params, err := util.ReadParamsUntilBlank(reader)
 	if err != nil {
 		return t, err
@@ -431,7 +431,7 @@ func unmarshalNode(raw []byte) (interface{}, error) {
 
 // unmarshalTree unmarshal tree data from JSON raw data and convert it to `lgTree` structure
 func unmarshalTree(raw []byte) (lgTree, error) {
-	t := lgTree{}
+	t := emptyTree(nil)
 
 	treeJSON := &lgTreeJSON{}
 	err := json.Unmarshal(raw, treeJSON)
