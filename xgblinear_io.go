@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/dmitryikh/leaves/internal/xgbin"
+	"github.com/aivarasbaranauskas/leaves/internal/xgbin"
 	"github.com/dmitryikh/leaves/transformation"
 )
 
